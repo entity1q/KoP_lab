@@ -1,4 +1,4 @@
-# Connect Four — Vite + React (каркас)
+# Connect Four — Vite + React Лабораторна робота N1
 
 Каркас застосунку гри "Чотири в ряд (Connect Four)" без бізнес-логіки та без роутингу.
 
