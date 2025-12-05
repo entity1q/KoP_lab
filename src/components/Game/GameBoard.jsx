@@ -1,14 +1,16 @@
-import Column from "./Column.jsx";
+import Column from "./Column";
 import "./GameBoard.css";
 
-export default function GameBoard() {
-  const columns = Array.from({ length: 7 });
-
-  return (
-    <div className="game-board">
-      {columns.map((_, index) => (
-        <Column key={index} />
-      ))}
-    </div>
-  );
+export default function GameBoard({ board, onDrop }) {
+    return (
+        <div className="game-board">
+            {board[0].map((_, columnIndex) => (
+                <Column
+                    key={columnIndex}
+                    column={board.map((row) => row[columnIndex])}
+                    onClick={() => onDrop(columnIndex)}
+                />
+            ))}
+        </div>
+    );
 }

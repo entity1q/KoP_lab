@@ -1,13 +1,11 @@
-import Cell from "./Cell.jsx";
+import Cell from "./Cell";
 
-export default function Column() {
-  const cells = Array.from({ length: 6 });
-
-  return (
-    <div>
-      {cells.map((_, index) => (
-        <Cell key={index} />
-      ))}
-    </div>
-  );
+export default function Column({ column, onClick }) {
+    return (
+        <div onClick={onClick}>
+            {column.map((value, index) => (
+                <Cell key={index} value={value} />
+            ))}
+        </div>
+    );
 }
