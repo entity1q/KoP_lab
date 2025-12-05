@@ -1,0 +1,21 @@
+.ui-btn {
+  padding: 12px 24px;
+  background: #ffcc00;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+}
+
+.ui-btn:hover {
+  background: #ffd633;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+}
+
+.ui-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}

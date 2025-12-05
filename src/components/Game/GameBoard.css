@@ -1,0 +1,9 @@
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(7, 60px);
+  gap: 8px;
+  background: #0f3fa9;
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
