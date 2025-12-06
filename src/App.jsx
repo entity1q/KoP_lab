@@ -1,36 +1,24 @@
 import { useState } from "react";
 import StartPage from "./pages/StartPage/StartPage.jsx";
 import GamePage from "./pages/GamePage/GamePage.jsx";
-import ResultPage from "./pages/ResultPage/ResultPage.jsx";
+import { GameSettingsProvider } from "./context/GameSettingsContext";
 
 function App() {
-  const [page, setPage] = useState("start");
-    const [resultWinner, setResultWinner] = useState(null);
-    const [resultDraw, setResultDraw] = useState(false);
+    return (
+        <GameSettingsProvider>
+            <AppContent />
+        </GameSettingsProvider>
+    );
+}
 
+function AppContent() {
+    const [page, setPage] = useState("start");
 
-    if (page === "start") return <StartPage onStart={() => setPage("game")} />;
+    if (page === "start")
+        return <StartPage onStart={() => setPage("game")} />;
+
     if (page === "game")
-        return (
-            <GamePage
-                onFinish={(winner, isDraw) => {
-                    setResultWinner(winner);
-                    setResultDraw(isDraw);
-                    setPage("result");
-                }}
-            />
-        );
-    if (page === "result")
-        return (
-            <ResultPage
-                winner={resultWinner}
-                isDraw={resultDraw}
-                onRestart={() => {
-                    setPage("start");
-                }}
-            />
-        );
-
+        return <GamePage onExit={() => setPage("start")} />;
 
     return null;
 }

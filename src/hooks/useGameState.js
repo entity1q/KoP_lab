@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { useGameSettings } from "../context/GameSettingsContext";
 
 export function useGameState() {
     const EMPTY_BOARD = Array.from({ length: 6 }, () => Array(7).fill(null));
+
+    const { settings } = useGameSettings();
+    const winLength = settings.winLength;
 
     const [board, setBoard] = useState(EMPTY_BOARD);
     const [currentPlayer, setCurrentPlayer] = useState("R");
@@ -13,6 +17,7 @@ export function useGameState() {
 
         const newBoard = board.map((row) => [...row]);
 
+        // Падіння фішки
         for (let row = 5; row >= 0; row--) {
             if (newBoard[row][columnIndex] === null) {
                 newBoard[row][columnIndex] = currentPlayer;
@@ -42,10 +47,10 @@ export function useGameState() {
 
     function checkWinner(board) {
         const directions = [
-            { x: 1, y: 0 },
-            { x: 0, y: 1 },
-            { x: 1, y: 1 },
-            { x: 1, y: -1 },
+            { x: 1, y: 0 },   // горизонталь
+            { x: 0, y: 1 },   // вертикаль
+            { x: 1, y: 1 },   // діагональ вниз вправо
+            { x: 1, y: -1 },  // діагональ вгору вправо
         ];
 
         for (let row = 0; row < 6; row++) {
@@ -54,7 +59,9 @@ export function useGameState() {
                 if (!player) continue;
 
                 for (const { x, y } of directions) {
-                    if (checkLine(board, row, col, x, y, player)) return player;
+                    if (checkLine(board, row, col, x, y, player)) {
+                        return player;
+                    }
                 }
             }
         }
@@ -62,7 +69,7 @@ export function useGameState() {
     }
 
     function checkLine(board, r, c, dx, dy, player) {
-        for (let i = 1; i < 4; i++) {
+        for (let i = 1; i < winLength; i++) {
             const nr = r + dy * i;
             const nc = c + dx * i;
 

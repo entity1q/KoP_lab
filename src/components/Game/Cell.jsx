@@ -1,11 +1,16 @@
 import "./Cell.css";
 
-export default function Cell({ value }) {
+export default function Cell({ value, player1Color, player2Color }) {
+    let color = "white";
+
+    if (value === "R") color = player1Color;
+    if (value === "Y") color = player2Color;
+
     return (
         <div
             className="cell"
             style={{
-                background: value === "R" ? "red" : value === "Y" ? "yellow" : "white",
+                background: color,
             }}
         />
     );
