@@ -1,20 +1,27 @@
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../../components/Layout/Layout.jsx";
 import Button from "../../components/UI/Button.jsx";
 import Modal from "../../components/Modal/Modal.jsx";
 import SettingsForm from "./SettingsForm.jsx";
-import "./StartPage.css";
+import styles from "./StartPage.module.css";
 
-export default function StartPage({ onStart }) {
+export default function StartPage() {
     const [showSettings, setShowSettings] = useState(false);
+    const navigate = useNavigate();
+    const { userId } = useParams();
+
+    function handleStartGame() {
+        navigate(`/user/${userId}/game`);
+    }
 
     return (
         <Layout>
-            <div className="start-screen">
+            <div className={styles.startScreen}>
                 <h2>Ласкаво просимо!</h2>
                 <p>Натисніть кнопку нижче, щоб розпочати гру.</p>
 
-                <Button onClick={onStart}>Почати гру</Button>
+                <Button onClick={handleStartGame}>Почати гру</Button>
                 <Button onClick={() => setShowSettings(true)}>Налаштування</Button>
             </div>
 

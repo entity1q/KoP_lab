@@ -1,0 +1,18 @@
+.startScreen {
+    text-align: center;
+    margin-top: 80px;
+}
+
+.startScreen h2 {
+    font-size: 32px;
+    margin-bottom: 16px;
+}
+
+.startScreen p {
+    margin-bottom: 24px;
+}
+
+.startScreen button {
+    display: block;
+    margin: 8px auto;
+}

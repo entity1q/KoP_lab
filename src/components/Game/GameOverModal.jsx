@@ -1,6 +1,13 @@
 import Modal from "../Modal/Modal";
 
-export default function GameOverModal({ winner, isDraw, wins, isFinal, onNextRound, onRestart }) {
+export default function GameOverModal({
+                                          winner,
+                                          isDraw,
+                                          wins,
+                                          isFinal,
+                                          onNextRound,
+                                          onRestart,
+                                      }) {
     const scoreText = `R — ${wins.R} | Y — ${wins.Y}`;
 
     return (

@@ -1,27 +1,31 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../../components/Layout/Layout";
 import GameBoard from "../../components/Game/GameBoard";
 import Button from "../../components/UI/Button";
-import "./GamePage.css";
 import { useGameState } from "../../hooks/useGameState";
 import GameOverModal from "../../components/Game/GameOverModal";
 import { useGameSettings } from "../../context/GameSettingsContext";
 
-export default function GamePage({ onExit }) {
+import styles from "./GamePage.module.css"; //
+
+export default function GamePage() {
+    const navigate = useNavigate();
+    const { userId } = useParams();
+
     const game = useGameState();
     const { settings } = useGameSettings();
 
     const [wins, setWins] = useState({ R: 0, Y: 0 });
-    const [finalWinner, setFinalWinner] = useState(null); // 🟦 новий стан
+    const [finalWinner, setFinalWinner] = useState(null);
 
     useEffect(() => {
         if (game.winner) {
-            setWins(prev => {
+            setWins((prev) => {
                 const updated = {
                     ...prev,
                     [game.winner]: prev[game.winner] + 1,
                 };
-
 
                 if (updated[game.winner] >= settings.maxWins) {
                     setFinalWinner(game.winner);
@@ -30,7 +34,11 @@ export default function GamePage({ onExit }) {
                 return updated;
             });
         }
-    }, [game.winner]);
+    }, [game.winner, settings.maxWins]);
+
+    function returnToMenu() {
+        navigate(`/user/${userId}/start`);
+    }
 
     return (
         <Layout>
@@ -41,16 +49,20 @@ export default function GamePage({ onExit }) {
                     wins={wins}
                     isFinal={!!finalWinner}
                     onNextRound={() => game.resetGame()}
-                    onRestart={onExit}
+                    onRestart={returnToMenu}
                 />
             )}
 
-            <div className="game-page">
-                <p>Хід гравця: {game.currentPlayer}</p>
+            <div className={styles.gamePage}>
+                <p className={styles.playerTurn}>
+                    Хід гравця: {game.currentPlayer}
+                </p>
 
                 <GameBoard board={game.board} onDrop={game.dropDisc} />
 
-                <Button onClick={game.resetGame}>Скинути гру</Button>
+                <div className={styles.resetButton}>
+                    <Button onClick={game.resetGame}>Скинути гру</Button>
+                </div>
             </div>
         </Layout>
     );
